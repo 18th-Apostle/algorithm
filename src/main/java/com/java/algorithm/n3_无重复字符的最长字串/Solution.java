@@ -81,7 +81,7 @@ public class Solution {
 
 
     /**
-     *
+     * 滑动窗口
      * @param s
      * @return
      */
@@ -89,29 +89,15 @@ public class Solution {
         if (s == null || s.equals("")) {
             return 0;
         }
-        String[] split = s.split("|");
-        if(split.length==1) return 1;
-        StringBuilder builder = new StringBuilder();
-        for (String str : split){
-            if(builder.indexOf(str)==-1){
-                builder.append(str);
-            }
-        }
-        int max = 0;
-        for (int i=0; i<builder.length()-1; i++){
-            String substring = builder.substring(i, builder.length());
-            if(s.indexOf(substring)>-1){
-                if(substring.length()>max){
-                    max = substring.length();
-                }
-            }
-        }
-        for (int i=builder.length(); i>0; i--){
-            String substring = builder.substring(0, i);
-            if(s.indexOf(substring)>-1){
-                if(substring.length()>max){
-                    max = substring.length();
-                }
+        int n = s.length();
+        Set<Character> set = new HashSet<Character>();
+        int max = 0, i=0, j=0;
+        while (i<n && j<n){
+            if(!set.contains(s.charAt(j))){
+                set.add(s.charAt(j++));
+                max = Math.max(max, j-i);
+            }else{
+                set.remove(s.charAt(i++));
             }
         }
         return max;

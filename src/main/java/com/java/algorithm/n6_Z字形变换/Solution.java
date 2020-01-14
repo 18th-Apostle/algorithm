@@ -1,5 +1,8 @@
 package com.java.algorithm.n6_Z字形变换;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Solution {
     public static String convert(String s, int numRows) {
         if(s.length()<numRows || numRows<2){
@@ -38,7 +41,31 @@ public class Solution {
         return builder.toString();
     }
 
+    public static String convert2(String s, int numRows) {
+        if(s.length()==1){
+            return s;
+        }
+        List<StringBuilder> list = new ArrayList<StringBuilder>();
+        for (int i=0; i<Math.max(numRows, s.length()); i++){
+            list.add(new StringBuilder());
+        }
+        int curRow = 0;
+        boolean goingDown = false;
+        for (char str : s.toCharArray()){
+            list.get(curRow).append(str);
+            if(curRow==0 || curRow==numRows-1){
+                goingDown = !goingDown;
+            }
+            curRow += goingDown ? 1 : -1;
+        }
+        StringBuilder string = new StringBuilder();
+        for (StringBuilder builder : list){
+            string.append(builder);
+        }
+        return string.toString();
+    }
+
     public static void main(String[] args) {
-        System.out.println(convert("AB", 1));
+        System.out.println(convert2("AB", 1));
     }
 }
